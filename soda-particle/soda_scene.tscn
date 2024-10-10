@@ -1,0 +1,163 @@
+[gd_scene load_steps=8 format=3 uid="uid://cthgof1u7qdmc"]
+
+[ext_resource type="Material" uid="uid://bn4jkidj13ni5" path="res://metal.tres" id="1_br4y1"]
+
+[sub_resource type="Animation" id="Animation_xc3b7"]
+resource_name = "soda_pop"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CSGCylinder3D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.533333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(-0.600725, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CSGCylinder3D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.533333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0.788644, -0.0324492), Vector3(0, 0.788644, -0.0324492), Vector3(0, 0.86784, -0.0674053)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GPUParticles3D:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("GPUParticles3D:amount")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.533333, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [500, 200, 1]
+}
+
+[sub_resource type="Animation" id="Animation_e0yep"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CSGCylinder3D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CSGCylinder3D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0.788644, -0.0324492)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GPUParticles3D:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("GPUParticles3D:amount")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [8]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8uu56"]
+_data = {
+"RESET": SubResource("Animation_e0yep"),
+"soda_pop": SubResource("Animation_xc3b7")
+}
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6ie78"]
+albedo_color = Color(0.66, 0.66, 0.66, 1)
+metallic = 0.85
+roughness = 0.4
+clearcoat_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q875m"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_aj2ux"]
+material = SubResource("StandardMaterial3D_q875m")
+radius = 0.05
+height = 0.05
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.882954, -0.232854, 0.407641, 0.00215402, 0.866301, 0.499517, -0.469455, 0.441929, -0.764403, 0.993936, 2.35792, -1.677)
+fov = 66.4845
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Camera3D"]
+transform = Transform3D(-0.882954, 0.00215402, -0.469455, -0.232854, 0.866301, 0.441929, 0.407641, 0.499517, -0.764403, 0.0852454, -1.07011, -2.86489)
+height = 1.537
+sides = 14
+material = ExtResource("1_br4y1")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera3D/CSGCylinder3D"]
+libraries = {
+"": SubResource("AnimationLibrary_8uu56")
+}
+autoplay = "soda_pop"
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Camera3D/CSGCylinder3D"]
+transform = Transform3D(0.3, 0, 0, 0, 0.05, 0, 0, 0, 0.4, 0, 0.788644, -0.0324492)
+height = 0.5
+sides = 64
+material = SubResource("StandardMaterial3D_6ie78")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="Camera3D/CSGCylinder3D"]
+transform = Transform3D(1, 0, 0, -1.32349e-23, 1, 0, 0, 0, 1, 1.22537e-08, 0.911047, -0.411165)
+interp_to_end = 0.28
+one_shot = true
+speed_scale = 26.72
+explosiveness = 1.0
+randomness = 1.0
+collision_base_size = 0.11
+local_coords = true
+draw_pass_1 = SubResource("SphereMesh_aj2ux")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.77169, 1.9405, 0.922709)
+light_energy = 16.0
